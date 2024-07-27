@@ -14,15 +14,15 @@ def cb(topic, message):
     if topic == b"direction":
         direction = message.decode()
         if direction == "left":
-            turn_left()
+            wheels.turn_left()
         elif direction == "right":
-            turn_right()
+            wheels.turn_right()
         elif direction == "up":
-            move_forward()
+            wheels.move_forward()
         elif direction == "down":
-            move_backward()
+            wheels.move_backward()
         else:
-            print("Unknown direction")
+            wheels.stop()
 
 def main():
     try:
