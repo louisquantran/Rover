@@ -85,11 +85,17 @@ size {
   color: #333;
 }
 
+.App-header p {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
 .d-pad {
   position: relative;
-  width: 300px; /* Increased size to accommodate larger buttons */
-  height: 300px; /* Increased size to accommodate larger buttons */
-  margin: 50px auto; /* Center the D-pad horizontally */
+  width: 300px; /* Container size */
+  height: 300px; /* Container size */
+  margin: 20px auto; /* Center the D-pad horizontally */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,52 +103,54 @@ size {
 
 .button {
   position: absolute;
-  width: 80px; /* Increased button size */
-  height: 80px; /* Increased button size */
+  width: 80px; /* Button size */
+  height: 80px; /* Button size */
   background-color: #333;
   color: white;
   border: none;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.1s;
   outline: none;
   cursor: pointer;
+  border-radius: 10px; /* Rounded corners */
 }
 
 .button:hover,
 .button:active {
   background-color: #555;
+  transform: scale(1.1); /* Slightly enlarge on hover and press */
 }
 
 .up {
   top: 0;
-  left: 110px; /* Adjusted to center */
+  left: 110px; /* Centered horizontally */
 }
 
 .left {
-  top: 110px; /* Adjusted to center */
+  top: 110px; /* Centered vertically */
   left: 0;
 }
 
 .right {
-  top: 110px; /* Adjusted to center */
-  left: 220px; /* Adjusted to center */
+  top: 110px; /* Centered vertically */
+  left: 220px; /* Centered horizontally */
 }
 
 .down {
-  top: 220px; /* Adjusted to center */
-  left: 110px; /* Adjusted to center */
+  top: 220px; /* Centered horizontally */
+  left: 110px; /* Centered vertically */
 }
 
 .Stop-button {
   position: absolute;
-  top: 110px; /* Adjusted to center */
-  left: 110px; /* Adjusted to center */
-  width: 80px; /* Increased button size */
-  height: 80px; /* Increased button size */
+  top: 110px; /* Centered vertically */
+  left: 110px; /* Centered horizontally */
+  width: 80px; /* Button size */
+  height: 80px; /* Button size */
   background-color: red;
   border-radius: 50%;
   color: white;
   border: none;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.1s;
   outline: none;
   cursor: pointer;
 }
@@ -150,8 +158,8 @@ size {
 .Stop-button:hover,
 .Stop-button:active {
   background-color: darkred;
+  transform: scale(1.1); /* Slightly enlarge on hover and press */
 }
-
 
 
 .Data-display {
@@ -167,7 +175,12 @@ size {
 }
 
 .column {
-  flex: 1; /* Allow columns to grow equally */
-  padding: 10px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 50px; /* Space between columns */
+}
+
+.middle-column {
+  margin: 0 20px; /* Increase margin for central alignment */
 }
