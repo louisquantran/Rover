@@ -12,23 +12,10 @@ export const useWebSocket = () => {
   const isSendingRef = useRef(false);
 
   useEffect(() => {
-    // Listen for temperature updates
-    socket.on('temperature', (data) => {
-      setTemperature(data);
-    });
-
-    // Listen for humidity updates
-    socket.on('humidity', (data) => {
-      setHumidity(data);
-    });
-
-    socket.on('ultrasonic', (data) => {
-      setUltrasonic(data);
-    });
-
-    socket.on("direction", (msg) => {
-      setDirection(msg);
-    });
+    socket.on('temperature', (data) => setTemperature(data));
+    socket.on('humidity', (data) => setHumidity(data));
+    socket.on('ultrasonic', (data) => setUltrasonic(data));
+    socket.on("direction", (msg) => setDirection(msg));
 
     return () => {
       socket.off('temperature');
@@ -40,37 +27,22 @@ export const useWebSocket = () => {
 
   const sendDirectionMessage = (direction) => {
     console.log(`Sending direction command: ${direction}`);
-    
-    // Send the direction command to the server
-    if (direction === "left") {
-      socket.emit('send-direction', "left");
-    } else if (direction === "right") {
-      socket.emit('send-direction', "right");
-    } else if (direction === "up") {
-      socket.emit('send-direction', "up");
-    } else if (direction === "down") {
-      socket.emit('send-direction', "down");
-    } else {
-      console.error('send-direction', "stop");
-    }
+    socket.emit('send-direction', direction);
   };
 
   const startSendingDirectionMessage = (direction) => {
     if (isSendingRef.current) return; // Prevent multiple intervals
-
-    isSendingRef.current = true;
-    sendDirectionMessage(direction);
-
+  
+    // Increase the interval duration to your desired delay, e.g., 30000 for 30 seconds
     intervalIdRef.current = setInterval(() => {
       sendDirectionMessage(direction);
-    }, 1000); // Fixed interval duration of 200ms
+    }, 30000); // Interval duration in milliseconds
   };
 
   const stopSendingDirectionMessage = () => {
-    if (intervalIdRef.current) {
-      clearInterval(intervalIdRef.current);
-      intervalIdRef.current = null;
-    }
+    clearInterval(intervalIdRef.current); // Clear the interval
+    sendDirectionMessage("stop"); // Send stop command immediately
+    intervalIdRef.current = null;
     isSendingRef.current = false;
   };
 
