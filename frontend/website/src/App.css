@@ -27,12 +27,19 @@
 }
 
 .App-body {
+  font-size: 1em;
   flex: 1; /* Take up remaining space */
   display: flex;
   flex-direction: row; /* Arrange children horizontally */
 }
 
+size {
+  font-size: 1em;
+  margin: 0;
+}
+
 .left-half, .right-half {
+  font-size: 2em;
   flex: 1; /* Each half takes up equal space */
   display: flex;
   flex-direction: column; /* Stack text and image vertically */
@@ -50,6 +57,57 @@
 .Testing {
   margin-top: 20px; /* Space between text and image */
   width: 100%; /* Full width of the container */
-  max-width: 500px; /* Adjust as needed */
+  max-width: 300px; /* Adjust as needed */
   height: auto; /* Maintain aspect ratio */
+}
+
+.Mqtt-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* src/App.css */
+
+.Mqtt-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: white;
+  background-color: #0288d1; /* Button color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #026f9e; /* Darker button color on hover */
+}
+
+.Data-display {
+  margin-top: 20px;
+  font-size: 1.5em;
+  color: #000; /* Black text color */
+}
+
+.App-data-body {
+  display: flex;
+  justify-content: center; /* Distribute space evenly between columns */
+  padding: 20px;
+}
+
+.column {
+  flex: 1; /* Allow columns to grow equally */
+  padding: 10px;
+  text-align: center;
 }

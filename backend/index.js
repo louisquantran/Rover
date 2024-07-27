@@ -23,7 +23,7 @@ const client = MQTT.connect(process.env.CONNECT_URL, {
   connectTimeout: 3000,
   username: process.env.MQTT_USER,
   password: process.env.MQTT_PASS,
-  reconnectPeriod: 10000,
+  reconnectPeriod: 3000,
   debug: true,
   rejectUnauthorized: false // Add this line for testing, should be removed in production
 });
@@ -59,11 +59,19 @@ client.on('connect', async () => {
     }
   });
 
-  client.subscribe("temp", (err) => {
+  client.subscribe("temperature", (err) => {
     if (err) {
-      console.error("Subscription error for 'temp': ", err);
+      console.error("Subscription error for 'temperature': ", err);
     } else {
-      console.log("Subscribed to 'temp'");
+      console.log("Subscribed to 'temperature'");
+    }
+  });
+
+  client.subscribe("humidity", (err) => {
+    if (err) {
+      console.error("Subscription error for 'humidity': ", err);
+    } else {
+      console.log("Subscribed to 'humidity'");
     }
   });
 });
@@ -79,15 +87,22 @@ APP.use(express.json());
 // Readings from sensors 
 let latestTemp = null;
 let latestUltrasonic = null;
+let latestHumidity = null;
 
 io.on("connection", (socket) => {
   console.log("Frontend connected to socket");
 
   // Send the latest sensor data to the newly connected client
+
   if (latestTemp) {
-    socket.emit('temp', latestTemp);
+    socket.emit('temperature', latestTemp);
   }
-  if (latestUltrasonic) socket.emit('ultrasonic', latestUltrasonic);
+  if (latestUltrasonic) {
+    socket.emit('ultrasonic', latestUltrasonic);
+  }
+  if (latestHumidity) {
+    socket.emit('humidity', latestHumidity);
+  }
 
   // Listen for direction messages from the frontend
   socket.on('send-direction', (message) => {
@@ -113,20 +128,24 @@ io.on("connection", (socket) => {
 });
 
 setInterval(() => {
-  io.emit('temp', latestTemp);
+  io.emit('temperature', latestTemp);
   io.emit('ultrasonic', latestUltrasonic);
+  io.emit('humidity', latestHumidity)
 }, 1000);
 
-server.listen(8000, () => {
-  console.log('Server is running on port 8000');
+server.listen(8006, () => {
+  console.log('Server is running on port 8006');
 });
 
 client.on('message', (TOPIC, payload) => {
   console.log("Received from broker:", TOPIC, payload.toString());
-  if( TOPIC === 'temp' ) {
+  if( TOPIC === 'temperature' ) {
     latestTemp = payload.toString();
   }
   else if ( TOPIC === 'ultrasonic' ) {
     latestUltrasonic = payload.toString();
+  }
+  else if ( TOPIC === 'humidity') {
+    latestHumidity = payload.toString();
   }
 });
