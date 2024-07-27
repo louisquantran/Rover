@@ -105,9 +105,9 @@ io.on("connection", (socket) => {
   }
 
   // Listen for direction messages from the frontend
-  socket.on('send-direction', (message) => {
-    console.log('Received direction message from frontend:', message);
-    client.publish("direction", message);
+  socket.on('send-direction', (direction) => {
+    console.log('Received direction message from frontend:', direction);
+    client.publish("direction", direction);
   });
 
   // Listen for arm value messages from the frontend

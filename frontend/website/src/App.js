@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import logo from './picture/Gojo-nah-id-win-Jujutsu-Kaisen.jpeg';
 import team from './picture/Team.jpg';
@@ -8,10 +7,11 @@ import './App.css';
 import { useWebSocket } from './Connect';
 
 function App() {
-  const { temperature } = useWebSocket();
-  const { humidity } = useWebSocket();
-  const { ultrasonic } = useWebSocket();
-
+  const { temperature, humidity, ultrasonic, sendDirectionMessage } = useWebSocket();
+  const { startSendingDirectionMessage, stopSendingDirectionMessage } = useWebSocket();
+  const handleButtonPress = (direction) => {
+    sendDirectionMessage(direction);
+  };
 
   return (
     <div className="App">
@@ -26,12 +26,12 @@ function App() {
           <img src={first_model} className="Testing" alt="Initial rover model" />
         </div>
         <div className="middle-line"></div>
-          <div className="right-half">
-            <p>First schematic</p>
-            <img src={first_schematic} className="Testing" alt="First schematic" />
-          </div>
+        <div className="right-half">
+          <p>First schematic</p>
+          <img src={first_schematic} className="Testing" alt="First schematic" />
         </div>
-        <div className="App-data-body">
+      </div>
+      <div className="App-data-body">
         <div className="column">
           <div className="Data-display">
             <p>Temperature: {temperature}°C</p>
@@ -48,9 +48,41 @@ function App() {
           </div>
         </div>
       </div>
+      <div className="Direction-buttons">
+        <button 
+          onMouseDown={() => startSendingDirectionMessage('left')} 
+          onMouseUp={stopSendingDirectionMessage}
+          onMouseLeave={stopSendingDirectionMessage}
+        >
+          Left
+        </button>
+        <button 
+          onMouseDown={() => startSendingDirectionMessage('right')} 
+          onMouseUp={stopSendingDirectionMessage}
+          onMouseLeave={stopSendingDirectionMessage}
+        >
+          Right
+        </button>
+        <button 
+          onMouseDown={() => startSendingDirectionMessage('up')} 
+          onMouseUp={stopSendingDirectionMessage}
+          onMouseLeave={stopSendingDirectionMessage}
+        >
+          Up
+        </button>
+        <button 
+          onMouseDown={() => startSendingDirectionMessage('down')} 
+          onMouseUp={stopSendingDirectionMessage}
+          onMouseLeave={stopSendingDirectionMessage}
+        >
+          Down
+        </button>
+        <button 
+          className="Stop-button"
+          onClick={() => handleButtonPress('stop')}>Stop</button>
+      </div>
     </div>
   );
 }
-
 
 export default App;
