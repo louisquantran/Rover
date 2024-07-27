@@ -48,8 +48,9 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="Direction-buttons">
+      <div className="d-pad">
         <button 
+          className="button left"
           onMouseDown={() => startSendingDirectionMessage('left')} 
           onMouseUp={stopSendingDirectionMessage}
           onMouseLeave={stopSendingDirectionMessage}
@@ -57,6 +58,7 @@ function App() {
           Left
         </button>
         <button 
+          className="button right"
           onMouseDown={() => startSendingDirectionMessage('right')} 
           onMouseUp={stopSendingDirectionMessage}
           onMouseLeave={stopSendingDirectionMessage}
@@ -64,6 +66,7 @@ function App() {
           Right
         </button>
         <button 
+          className="button up"
           onMouseDown={() => startSendingDirectionMessage('up')} 
           onMouseUp={stopSendingDirectionMessage}
           onMouseLeave={stopSendingDirectionMessage}
@@ -71,6 +74,7 @@ function App() {
           Up
         </button>
         <button 
+          className="button down"
           onMouseDown={() => startSendingDirectionMessage('down')} 
           onMouseUp={stopSendingDirectionMessage}
           onMouseLeave={stopSendingDirectionMessage}
