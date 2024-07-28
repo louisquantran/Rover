@@ -12,16 +12,19 @@ export const useWebSocket = () => {
   const isSendingRef = useRef(false);
 
   useEffect(() => {
+
+
     socket.on('temperature', (data) => setTemperature(data));
     socket.on('humidity', (data) => setHumidity(data));
     socket.on('ultrasonic', (data) => setUltrasonic(data));
-    socket.on("direction", (msg) => setDirection(msg));
+    socket.on('direction', (msg) => setDirection(msg));
 
     return () => {
       socket.off('temperature');
       socket.off('humidity');
       socket.off('ultrasonic');
       socket.off('direction');
+      socket.off('camera');
     };
   }, []);
 
@@ -32,18 +35,20 @@ export const useWebSocket = () => {
 
   const startSendingDirectionMessage = (direction) => {
     if (isSendingRef.current) return; // Prevent multiple intervals
-  
-    // Increase the interval duration to your desired delay, e.g., 30000 for 30 seconds
+
+    isSendingRef.current = true; // Set the flag to true
+    sendDirectionMessage(direction); // Send the initial message immediately
+
     intervalIdRef.current = setInterval(() => {
       sendDirectionMessage(direction);
     }, 30000); // Interval duration in milliseconds
   };
 
   const stopSendingDirectionMessage = () => {
-    clearInterval(intervalIdRef.current); // Clear the interval
-    sendDirectionMessage("stop"); // Send stop command immediately
-    intervalIdRef.current = null;
-    isSendingRef.current = false;
+      clearInterval(intervalIdRef.current); // Clear the interval
+      sendDirectionMessage('stop'); // Send stop command immediately
+      intervalIdRef.current = null;
+      isSendingRef.current = false; // Reset the flag
   };
 
   return { temperature, humidity, ultrasonic, direction, sendDirectionMessage, stopSendingDirectionMessage, startSendingDirectionMessage };

@@ -23,7 +23,7 @@ const client = MQTT.connect(process.env.CONNECT_URL, {
   connectTimeout: 3000,
   username: process.env.MQTT_USER,
   password: process.env.MQTT_PASS,
-  reconnectPeriod: 3000,
+  reconnectPeriod: 10000,
   debug: true,
   rejectUnauthorized: false // Add this line for testing, should be removed in production
 });
@@ -59,17 +59,17 @@ client.on('connect', async () => {
     }
   });
 
-  client.subscribe("temperature", (err) => {
+  client.subscribe("temp", (err) => {
     if (err) {
-      console.error("Subscription error for 'temperature': ", err);
+      console.error("Subscription error for 'temp': ", err);
     } else {
-      console.log("Subscribed to 'temperature'");
+      console.log("Subscribed to 'temp'");
     }
   });
 
   client.subscribe("humidity", (err) => {
     if (err) {
-      console.error("Subscription error for 'humidity': ", err);
+      console.error("Subscription error for 'temp': ", err);
     } else {
       console.log("Subscribed to 'humidity'");
     }
@@ -93,21 +93,15 @@ io.on("connection", (socket) => {
   console.log("Frontend connected to socket");
 
   // Send the latest sensor data to the newly connected client
-
   if (latestTemp) {
-    socket.emit('temperature', latestTemp);
+    socket.emit('temp', latestTemp);
   }
-  if (latestUltrasonic) {
-    socket.emit('ultrasonic', latestUltrasonic);
-  }
-  if (latestHumidity) {
-    socket.emit('humidity', latestHumidity);
-  }
+  if (latestUltrasonic) socket.emit('ultrasonic', latestUltrasonic);
 
   // Listen for direction messages from the frontend
-  socket.on('send-direction', (direction) => {
-    console.log('Received direction message from frontend:', direction);
-    client.publish("direction", direction);
+  socket.on('send-direction', (message) => {
+    console.log('Received direction message from frontend:', message);
+    client.publish("direction", message);
   });
 
   // Listen for arm value messages from the frontend
@@ -128,7 +122,7 @@ io.on("connection", (socket) => {
 });
 
 setInterval(() => {
-  io.emit('temperature', latestTemp);
+  io.emit('temp', latestTemp);
   io.emit('ultrasonic', latestUltrasonic);
   io.emit('humidity', latestHumidity)
 }, 1000);
@@ -139,7 +133,7 @@ server.listen(8006, () => {
 
 client.on('message', (TOPIC, payload) => {
   console.log("Received from broker:", TOPIC, payload.toString());
-  if( TOPIC === 'temperature' ) {
+  if( TOPIC === 'temp' ) {
     latestTemp = payload.toString();
   }
   else if ( TOPIC === 'ultrasonic' ) {

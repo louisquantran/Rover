@@ -151,13 +151,14 @@
   transform: scale(1.1); /* Slightly enlarge on hover and press */
 }
 
-
+/* Temperature, humidity, distance section */
 .Data-display {
   margin-top: 1px;
   font-size: 1.5em;
   color: #000; /* Black text color */
 }
 
+/* The data's customization */
 .App-data-body {
   display: flex;
   justify-content: center; /* Distribute space evenly between columns */
@@ -195,6 +196,7 @@
   border: 2px solid #fff;
 }
 
+/* Project summary section */
 .Project-summary {
   padding: 20px;
   background-color: #f0f0f0; /* Light background color */
@@ -202,12 +204,14 @@
   text-align: center;
 }
 
+/* The summary's header */
 .Project-summary h2 {
   font-size: 2em;
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
+/* The summary's body text */
 .Project-summary p {
   font-size: 1.2em;
   line-height: 1.5;

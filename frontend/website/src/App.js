@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import logo from './picture/Gojo-nah-id-win-Jujutsu-Kaisen.jpeg';
 import team from './picture/Team.jpg';
 import first_rover_model from './picture/IMG_0390.jpg';
@@ -8,22 +8,14 @@ import './App.css';
 import { useWebSocket } from './Connect'; 
 
 function App() {
-  const { temperature, humidity, ultrasonic, sendDirectionMessage } = useWebSocket();
-  const videoRef = React.useRef(null);
-  useEffect(() => {
-    const streamUrl = 'http://192.168.68.120:81/stream';
-
-    if (videoRef.current) {
-      videoRef.current.src = streamUrl;
-    }
-  }, []);
+  const { temperature, humidity, ultrasonic, sendDirectionMessage, startSendingDirectionMessage, stopSendingDirectionMessage} = useWebSocket();
 
   const handleButtonPress = (direction) => {
-    sendDirectionMessage(direction);
+    startSendingDirectionMessage(direction);
   };
 
   const handleButtonRelease = () => {
-    sendDirectionMessage('stop');
+    stopSendingDirectionMessage();
   };
 
   return (
@@ -35,13 +27,13 @@ function App() {
       </header>
       <div className="App-body">
         <div className="left-half">
-          <p>First rover model</p>
-          <img src={first_rover_model} alt="First rover model" />
+          <p>First Rover Model</p>
+          <img src={first_rover_model} alt="First Rover Model" />
         </div>
         <div className="middle-line"></div>
         <div className="right-half">
-          <p>First hand model</p>
-          <img src={first_hand_model} alt="First schematic" />
+          <p>First Hand Model</p>
+          <img src={first_hand_model} alt="First Schematic" />
         </div>
       </div>
       <hr className="section-divider" />
@@ -110,11 +102,7 @@ function App() {
         </button>
         <button 
           className="Stop-button"
-          onClick={() => handleButtonPress('stop')}>Stop</button>
-      </div>
-      <div className="left-half">
-        <p>Camera</p>
-        <video ref={videoRef} className="video"></video>
+          onClick={() => sendDirectionMessage('stop')}>Stop</button>
       </div>
       <div className="Project-summary">
         <h2>Project Summary</h2>
