@@ -24,7 +24,6 @@ export const useWebSocket = () => {
       socket.off('humidity');
       socket.off('ultrasonic');
       socket.off('direction');
-      socket.off('camera');
     };
   }, []);
 

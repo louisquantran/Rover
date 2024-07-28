@@ -23,7 +23,7 @@ const client = MQTT.connect(process.env.CONNECT_URL, {
   connectTimeout: 3000,
   username: process.env.MQTT_USER,
   password: process.env.MQTT_PASS,
-  reconnectPeriod: 10000,
+  reconnectPeriod: 3000,
   debug: true,
   rejectUnauthorized: false // Add this line for testing, should be removed in production
 });
@@ -59,7 +59,7 @@ client.on('connect', async () => {
     }
   });
 
-  client.subscribe("temp", (err) => {
+  client.subscribe("temperature", (err) => {
     if (err) {
       console.error("Subscription error for 'temp': ", err);
     } else {
@@ -94,7 +94,10 @@ io.on("connection", (socket) => {
 
   // Send the latest sensor data to the newly connected client
   if (latestTemp) {
-    socket.emit('temp', latestTemp);
+    socket.emit('temperature', latestTemp);
+  }
+  if (latestHumidity) {
+    socket.emit('humidity', latestHumidity)
   }
   if (latestUltrasonic) socket.emit('ultrasonic', latestUltrasonic);
 
@@ -122,7 +125,7 @@ io.on("connection", (socket) => {
 });
 
 setInterval(() => {
-  io.emit('temp', latestTemp);
+  io.emit('temperature', latestTemp);
   io.emit('ultrasonic', latestUltrasonic);
   io.emit('humidity', latestHumidity)
 }, 1000);
@@ -133,7 +136,7 @@ server.listen(8006, () => {
 
 client.on('message', (TOPIC, payload) => {
   console.log("Received from broker:", TOPIC, payload.toString());
-  if( TOPIC === 'temp' ) {
+  if( TOPIC === 'temperature' ) {
     latestTemp = payload.toString();
   }
   else if ( TOPIC === 'ultrasonic' ) {

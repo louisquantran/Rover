@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import logo from './picture/Gojo-nah-id-win-Jujutsu-Kaisen.jpeg';
 import team from './picture/Team.jpg';
 import first_rover_model from './picture/IMG_0390.jpg';
@@ -6,6 +6,7 @@ import schematic from './picture/IMG_0391.jpg';
 import first_hand_model from './picture/IMG_3586.jpg';
 import './App.css';
 import { useWebSocket } from './Connect'; 
+import 'video.js/dist/video-js.css';
 
 function App() {
   const { temperature, humidity, ultrasonic, sendDirectionMessage, startSendingDirectionMessage, stopSendingDirectionMessage} = useWebSocket();
@@ -111,9 +112,13 @@ function App() {
           We built and tested the rover, developed the hand model, and created the schematic for the entire system. We also integrated an ESP32-CAM
           for live video streaming and gathered environmental data such as temperature, humidity, and distance using various sensors.
         </p>      
+      </div>  
+      <div className="left-half">
+      <iframe src="http://192.168.68.105/" height="680" width="800" />
       </div>
     </div>
   );
 }
+
 
 export default App;
