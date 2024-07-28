@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './picture/Gojo-nah-id-win-Jujutsu-Kaisen.jpeg';
 import team from './picture/Team.jpg';
 import first_rover_model from './picture/IMG_0390.jpg';
 import schematic from './picture/IMG_0391.jpg';
 import first_hand_model from './picture/IMG_3586.jpg';
 import './App.css';
-import { useWebSocket } from './Connect';
+import { useWebSocket } from './Connect'; 
 
 function App() {
   const { temperature, humidity, ultrasonic, sendDirectionMessage } = useWebSocket();
+  const videoRef = React.useRef(null);
+  useEffect(() => {
+    const streamUrl = 'http://192.168.68.120:81/stream';
+
+    if (videoRef.current) {
+      videoRef.current.src = streamUrl;
+    }
+  }, []);
 
   const handleButtonPress = (direction) => {
     sendDirectionMessage(direction);
@@ -28,12 +36,12 @@ function App() {
       <div className="App-body">
         <div className="left-half">
           <p>First rover model</p>
-          <img src={first_rover_model} className="Testing" alt="First rover model" />
+          <img src={first_rover_model} alt="First rover model" />
         </div>
         <div className="middle-line"></div>
         <div className="right-half">
           <p>First hand model</p>
-          <img src={first_hand_model} className="Testing" alt="First schematic" />
+          <img src={first_hand_model} alt="First schematic" />
         </div>
       </div>
       <hr className="section-divider" />
@@ -42,13 +50,12 @@ function App() {
             <p>The Rover</p>
             <video controls>
               <source src="/video/firstRover.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
             </video>
           </div>
           <div className="middle-line"></div>
           <div className="right-half">
             <p>The Schematic</p>
-            <img src={schematic} className="Testing" alt="The Schematic" />
+            <img src={schematic} alt="The Schematic" />
           </div>
         </div>
       <div className="App-data-body">
@@ -104,6 +111,18 @@ function App() {
         <button 
           className="Stop-button"
           onClick={() => handleButtonPress('stop')}>Stop</button>
+      </div>
+      <div className="left-half">
+        <p>Camera</p>
+        <video ref={videoRef} className="video"></video>
+      </div>
+      <div className="Project-summary">
+        <h2>Project Summary</h2>
+        <p>
+          Our team worked on a rover project that integrates various technologies to achieve autonomous navigation and data collection.
+          We built and tested the rover, developed the hand model, and created the schematic for the entire system. We also integrated an ESP32-CAM
+          for live video streaming and gathered environmental data such as temperature, humidity, and distance using various sensors.
+        </p>      
       </div>
     </div>
   );
