@@ -68,6 +68,9 @@ function App() {
           </div>
         </div>
       </div>
+      <div className="left-half">
+        <iframe src="http://192.168.68.105/" height="275" width="375" />
+      </div>
       <div className="d-pad">
         <button 
           className="button left"
@@ -113,9 +116,6 @@ function App() {
           for live video streaming and gathered environmental data such as temperature, humidity, and distance using various sensors.
         </p>      
       </div>  
-      <div className="left-half">
-      <iframe src="http://192.168.68.105/" height="680" width="800" />
-      </div>
     </div>
   );
 }
