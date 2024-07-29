@@ -6,7 +6,6 @@ import schematic from './picture/IMG_0391.jpg';
 import first_hand_model from './picture/IMG_3586.jpg';
 import './App.css';
 import { useWebSocket } from './Connect'; 
-import 'video.js/dist/video-js.css';
 
 function App() {
   const { temperature, humidity, ultrasonic, sendDirectionMessage, startSendingDirectionMessage, stopSendingDirectionMessage} = useWebSocket();
@@ -69,7 +68,7 @@ function App() {
         </div>
       </div>
       <div className="left-half">
-        <iframe src="http://192.168.68.105/" height="275" width="375" />
+        <iframe src="http://192.168.68.109/" height="275" width="375" />
       </div>
       <div className="d-pad">
         <button 

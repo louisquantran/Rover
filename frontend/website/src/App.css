@@ -182,20 +182,6 @@
   margin: 0;
 }
 
-.video-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #000;
-}
-
-.video {
-  max-width: 100%;
-  max-height: 100%;
-  border: 2px solid #fff;
-}
-
 /* Project summary section */
 .Project-summary {
   padding: 20px;
