@@ -123,11 +123,6 @@ function App() {
           className="Stop-button"
           onClick={() => sendDirectionMessage('stop')}>Stop</button>
       </div>
-      <div className="right-half">
-          <video className="competition-video" controls>
-        <source src="/video/Competition.mp4" type="video/mp4" />
-        </video>
-        </div>
       <div className="Project-summary">
         <h2>Project Summary</h2>
         <p>
