@@ -19,8 +19,16 @@
 
 /* Header images */
 .App-header img {
-  height: 275px; 
   margin: 10px; 
+}
+
+.logo {
+  height: 200px; /* Adjust as needed for the logo */
+}
+
+.team-photo {
+  height: 400px; 
+  width: auto;
 }
 
 /* Header text */
@@ -40,7 +48,6 @@
 
 /* left and right sections */
 .left-half, .right-half {
-  font-size: 2em;
   flex: 1; 
   display: flex;
   flex-direction: column; 
@@ -51,25 +58,38 @@
 
 /* The text in both sections */
 .left-half p, .right-half p {
+  font-size: 1.75em;
   margin-bottom: 10px; 
   text-align: center; 
   margin-top: 10px;
 }
 
+.img2 {
+  width: 100%; 
+  max-width: 525px;
+  height: auto;
+}
+
 /* The images in both sections */
-.left-half img, .right-half img {
-  margin-top: 10px; 
+.img1 {
   width: 100%; 
   max-width: 300px; 
   height: auto; 
 }
 
 /* The videos in both sections */
-.left-half video, .right-half video {
-  margin-top: 10px;
-  width: 100%; /* Adjusts the width to fit within the container */
-  max-width: 500px; /* Maximum width of the video */
-  height: 400px; /* Maintain aspect ratio */
+.video1 {
+  width: 100%; 
+  max-width: 500px;
+  height: 400px; 
+}
+
+/* Competition video */
+.competition-video {
+  width: 100%; 
+  height: auto;
+  max-width: 600px; 
+  max-height: 400px; /* optional, to limit the maximum size */
 }
 
 /* The middle line to indicate a separation */
